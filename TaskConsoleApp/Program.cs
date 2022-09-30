@@ -33,10 +33,9 @@ namespace TaskConsoleApp
                 taskList.Add(GetContentAsync(x));
             });
 
-            // ilk hangisi tamamlanırsa onu firstData'ya alır.
-            var firtData = await Task.WhenAny(taskList);
+            
 
-            Console.WriteLine($"{firtData.Result.Site} - {firtData.Result.Length}");
+           // Console.WriteLine($"{firtData.Result.Site} - {firtData.Result.Length}");
 
         }
         public static async Task<Content> GetContentAsync(string url)
