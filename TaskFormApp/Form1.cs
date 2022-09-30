@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +23,48 @@ namespace TaskFormApp
 
         private async void btnReadFile_Click(object sender, EventArgs e)
         {
-            string data = await ReadFileAsync();
-            // burada işlem 15 sn sürse de alt satıra geçmez ama ana thread'i de bloklamaz.
+            #region AwaitHemenKullandık
+            //string data = await ReadFileAsync();
+
+            //// burada işlem 15 sn sürse de alt satıra geçmez ama ana thread'i de bloklamaz.
+
+            //richTextBox1.Text = data;
+            #endregion
+
+            #region AwaitSonraKullanıpAradaBaskaIslemYaptık
+            // asenkron metodların await diyerek sonucu hemen alabilirim yada  arada yapmak istediğimiz işlemler varsa await yapmak istediğimiz işlemden sonra kullanırız.
+
+            //string data = String.Empty;
+            //// await kullanmak istemediğimiz için sonucu stringe çekiyoruz.
+            //Task<string> reading = ReadFileAsync();
+            //// alt satıra geçer, arada başka işlemle yapar.
+
+            //richTextBox2.Text = await new HttpClient().GetStringAsync("https://www.google.com");
+
+            //data = await reading;
+
+            //richTextBox1.Text = data;
+
+
+
+            #endregion
+
+            #region AwaitVeAsyncKullanmadık
+            // ReadFileAsync2 için
+            string data = String.Empty;
             
+            Task<string> reading = ReadFileAsync2();
+            
+
+            richTextBox2.Text = await new HttpClient().GetStringAsync("https://www.google.com");
+
+            data = await reading;
+
             richTextBox1.Text = data;
+
+            #endregion
+
+
         }
 
         private void btnCounter_Click(object sender, EventArgs e)
@@ -62,7 +101,15 @@ namespace TaskFormApp
 
                 return data;
             }
-        } 
+        }
+        // async ve await kullanmadan
+        private Task<string> ReadFileAsync2()
+        {
+            StreamReader sr = new StreamReader("dosya.txt");
+            
+                return sr.ReadToEndAsync();
+            
+        }
 
     }
 }
