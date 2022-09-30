@@ -33,16 +33,10 @@ namespace TaskConsoleApp
                 taskList.Add(GetContentAsync(x));
             });
 
-            var contents =  Task.WhenAll(taskList.ToArray());
+            // ilk hangisi tamamlanırsa onu firstData'ya alır.
+            var firtData = await Task.WhenAny(taskList);
 
-            Console.WriteLine("WhenAll'dan sonra başka işlemler.");
-
-            var data = await contents;
-
-            data.ToList().ForEach(x =>
-            {
-                Console.WriteLine($"{x.Site} - boyut: {x.Length} ");
-            });
+            Console.WriteLine($"{firtData.Result.Site} - {firtData.Result.Length}");
 
         }
         public static async Task<Content> GetContentAsync(string url)
@@ -54,7 +48,7 @@ namespace TaskConsoleApp
             content.Length = data.Length;
             Console.WriteLine("GetContentAsync thread" + Thread.CurrentThread.ManagedThreadId);
 
-            return content; // tst
+            return content; 
         }
     }
      
