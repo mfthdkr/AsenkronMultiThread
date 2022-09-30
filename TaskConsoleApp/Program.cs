@@ -54,7 +54,7 @@ namespace TaskConsoleApp
             content.Length = data.Length;
             Console.WriteLine("GetContentAsync thread" + Thread.CurrentThread.ManagedThreadId);
 
-            return content;
+            return content; // tst
         }
     }
      
