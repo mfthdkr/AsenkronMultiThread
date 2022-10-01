@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,15 +29,15 @@ namespace TaskWebApp.API.Controllers
             {
                 _logger.LogInformation("İstek başladı");
 
-                await Task.Delay(3000, token);
-                var myTask = new HttpClient().GetStringAsync("https://www.google.com");
-
-                // başka işlemler
-
-                var data = await myTask;
+                Enumerable.Range(1,5).ToList().ForEach(x =>
+                {
+                    Thread.Sleep(1000);
+                    token.ThrowIfCancellationRequested();
+                });
+               
                 _logger.LogInformation("İstek bitti");
 
-                return Ok(data);
+                return Ok("işlemler bitti");
             }
             catch (Exception ex)
             {
