@@ -10,19 +10,18 @@ namespace TaskConsoleApp
 {
     internal class Program
     {
-
+        public static int CacheData { get; set; } = 150;
         static async Task Main(string[] args)
         {
-            Task myTask = Task.Run(() =>
-            {
-                throw new ArgumentException("Bir hata meydana geldi");
-            });
+            var myTask = GetData();
+            
 
-            await myTask;
-
-            Console.WriteLine("myTask bitti");
         }
-        
+
+        public static ValueTask<int> GetData()
+        {
+            return new ValueTask<int>(CacheData);
+        }
     }
 
 }
