@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -10,18 +11,26 @@ namespace TaskConsoleApp
 {
     internal class Program
     {
-        public static int CacheData { get; set; } = 150;
+        
         static async Task Main(string[] args)
         {
-            var myTask = GetData();
-            
+            Console.WriteLine("1.adım");
+            var myTask = GetContent();
 
+            Console.WriteLine("2.adım");
+
+            var content = await myTask;
+
+            Console.WriteLine("3.adım:" + content.Length);
         }
 
-        public static ValueTask<int> GetData()
+        public static async Task<string> GetContent()
         {
-            return new ValueTask<int>(CacheData);
+            var content = await new HttpClient().GetStringAsync("https://www.google.com");
+
+            return content;
         }
+
     }
 
 }
