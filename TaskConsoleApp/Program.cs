@@ -13,14 +13,16 @@ namespace TaskConsoleApp
 
         static async Task Main(string[] args)
         {
-            Console.WriteLine(GetData());
-        }
+            Task myTask = Task.Run(() =>
+            {
+                throw new ArgumentException("Bir hata meydana geldi");
+            });
 
-        public static string GetData()
-        {
-            var task = new HttpClient().GetStringAsync("https://www.google.com");
-            return task.Result;
+            await myTask;
+
+            Console.WriteLine("myTask bitti");
         }
+        
     }
-     
+
 }
