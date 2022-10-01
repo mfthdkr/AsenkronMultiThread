@@ -10,27 +10,17 @@ namespace TaskConsoleApp
 {
     internal class Program
     {
-        public static string CacheData { get; set; }
 
         static async Task Main(string[] args)
         {
-            CacheData = await GetDataAsync();
-            Console.WriteLine(CacheData);
+            Console.WriteLine(GetData());
         }
 
-        public static Task<string> GetDataAsync()
+        public static string GetData()
         {
-            if (String.IsNullOrEmpty(CacheData))
-            {
-                return File.ReadAllTextAsync("dosya.txt.");
-
-            }
-            else
-            {
-                return Task.FromResult<string>(CacheData);
-            }
+            var task = new HttpClient().GetStringAsync("https://www.google.com");
+            return task.Result;
         }
-
     }
      
 }

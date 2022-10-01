@@ -21,49 +21,12 @@ namespace TaskFormApp
             InitializeComponent();
         }
 
-        private async void btnReadFile_Click(object sender, EventArgs e)
-        {
-            #region AwaitHemenKullandık
-            //string data = await ReadFileAsync();
-
-            //// burada işlem 15 sn sürse de alt satıra geçmez ama ana thread'i de bloklamaz.
-
-            //richTextBox1.Text = data;
-            #endregion
-
-            #region AwaitSonraKullanıpAradaBaskaIslemYaptık
-            // asenkron metodların await diyerek sonucu hemen alabilirim yada  arada yapmak istediğimiz işlemler varsa await yapmak istediğimiz işlemden sonra kullanırız.
-
-            //string data = String.Empty;
-            //// await kullanmak istemediğimiz için sonucu stringe çekiyoruz.
-            //Task<string> reading = ReadFileAsync();
-            //// alt satıra geçer, arada başka işlemle yapar.
-
-            //richTextBox2.Text = await new HttpClient().GetStringAsync("https://www.google.com");
-
-            //data = await reading;
-
-            //richTextBox1.Text = data;
-
-
-
-            #endregion
-
-            #region AwaitVeAsyncKullanmadık
-            // ReadFileAsync2 için
-            string data = String.Empty;
+        private  void btnReadFile_Click(object sender, EventArgs e)
+        {   
             
-            Task<string> reading = ReadFileAsync2();
-            
+            var myTask = new HttpClient().GetStringAsync("https://www.sahibinden.com");
 
-            richTextBox2.Text = await new HttpClient().GetStringAsync("https://www.google.com");
-
-            data = await reading;
-
-            richTextBox1.Text = data;
-
-            #endregion
-
+            string data = myTask.Result;
 
         }
 
