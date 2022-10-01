@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,8 @@ namespace TaskWebApp.API.Controllers
     {
         [HttpGet]
         public async Task<IActionResult> GetContentAsync()
-        {
+        {   
+            Thread.Sleep(5000);
             var myTask = new HttpClient().GetStringAsync("https://www.google.com");
 
             // başka işlemler
