@@ -33,14 +33,14 @@ namespace TaskConsoleApp
                 taskList.Add(GetContentAsync(x));
             });
 
-            Console.WriteLine("WaitAny methodundan önce");
+            Console.WriteLine("WaitAll methodundan önce");
 
-         var contents= await  Task.WhenAll(taskList.ToArray());
+           bool result=   Task.WaitAll(taskList.ToArray(),30000);
+           Console.WriteLine("3 saniyede geldi mi " + result);
+            Console.WriteLine("WaitAll methodunda sonra");
+            Console.WriteLine($"{taskList.First().Result.Site} - {taskList.First().Result.Length}");
+
             
-            contents.ToList().ForEach(x =>
-            {
-                Console.WriteLine(x.Site);
-            });
 
         }
         public static async Task<Content> GetContentAsync(string url)
